@@ -178,20 +178,22 @@ def show_results(total, summary):
 
         st.write("")
         st.markdown('<p class="sec-head">Full Breakdown</p>', unsafe_allow_html=True)
+        
+        # FIXED: Replaced use_container_width=True with width="stretch"
         st.dataframe(
             {
                 "Product Name": [i["product_name"] for i in summary],
                 "Count":        [i["count"] for i in summary],
                 "Share (%)":    [f"{round(i['count']/total*100)}%" if total else "—" for i in summary],
             },
-            use_container_width=True,
+            width="stretch",
             hide_index=True
         )
     else:
         st.info("No products detected. Try a clearer image or different angle.")
 
 
-# ── Navbar ────────────────────────────────────────────────────────────────────
+# ── Navbar ───────────────────────────────────────────────────────────────────
 st.markdown("""
 <div class="navbar">
     <div class="navbar-brand">
@@ -227,12 +229,17 @@ with left:
         if uploaded:
             image = Image.open(uploaded).convert("RGB")
             st.markdown('<div class="img-wrap">', unsafe_allow_html=True)
-            st.image(image, use_container_width=True)
+            
+            # FIXED: Replaced use_container_width=True with width="stretch"
+            st.image(image, width="stretch")
+            
             st.markdown('</div>', unsafe_allow_html=True)
             st.caption(f"📄 {uploaded.name}  ·  {image.width}×{image.height}px  ·  {round(uploaded.size/1024,1)} KB")
             st.write("")
+            
+            # FIXED: Replaced use_container_width=True with width="stretch"
             run_upload = st.button("Run Detection →", type="primary",
-                                   use_container_width=True, key="btn_upload")
+                                   width="stretch", key="btn_upload")
         else:
             st.markdown("""
             <div style="padding:3rem 1rem;text-align:center;">
@@ -250,8 +257,10 @@ with left:
             image_cam = Image.open(captured).convert("RGB")
             st.caption(f"📷 Captured  ·  {image_cam.width}×{image_cam.height}px")
             st.write("")
+            
+            # FIXED: Replaced use_container_width=True with width="stretch"
             run_camera = st.button("Run Detection →", type="primary",
-                                   use_container_width=True, key="btn_camera")
+                                   width="stretch", key="btn_camera")
         else:
             run_camera = False
 
